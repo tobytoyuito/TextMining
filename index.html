@@ -1,2 +1,181 @@
-Hello World!
 
+<!DOCTYPE html>
+<html class="full" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="icon" href="../../favicon.ico"> -->
+
+    <title>TextMining</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/justified-nav.css" rel="stylesheet">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <!-- The justified navigation menu is meant for single line per list item.
+           Multiple lines will require custom code not provided by Bootstrap. -->
+      <div class="masthead">
+        <h3 class="text-muted">Opinion Mining and Sentiment Analysis of TripAdvisor Hotel Reviews</h3>
+        <nav>
+          <ul class="nav nav-justified">
+            <li class="active"><a href="#" data="#home">Home</a></li>
+            <li><a href="#" data="#introduction">Introduction</a></li>
+            <li><a href="#" data="#method">Method</a></li>
+            <li><a href="#" data="#results">Results</a></li>
+            <li><a href="#" data="#acknowledge">Acknowledge</a></li>
+            <li><a href="#" data="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+
+
+      <div id="home">
+        <!-- Jumbotron -->
+        <div class="jumbotron">
+          <h2>Opinion Mining and Sentiment Analysis of TripAdvisor Hotel Reviews</h2>
+          <p class="lead">Yaxiong Cai, Toby Du, Peiheng Hu, Arjun Sanghvi</p>
+          <p>Instructor: Pavlos Protopapas, TF: Rahul Dave</p>
+          <p>
+            <span class="slogan"></span>
+          </p>
+          <p><a class="btn btn-lg btn-success" href="#" role="button">Try Live Demo</a></p>
+        </div>
+
+        <h4>Three subtasks</h4>
+
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-lg-4">
+            <h2>Pair Extraction</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+          <div class="col-lg-4">
+            <h2>Sentiment Analysis</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+         </div>
+          <div class="col-lg-4">
+            <h2>Topic Analysis</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+            <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+          </div>
+        </div>
+
+        <div class="contact-us">
+          <form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
+            <div class="row">
+              <label for="name">Your name:</label><br />
+              <input id="name" class="input" name="name" type="text" value="" size="30" /><br />
+            </div>
+            <div class="row">
+              <label for="email">Your email:</label><br />
+              <input id="email" class="input" name="email" type="text" value="" size="30" /><br />
+            </div>
+            <div class="row">
+              <label for="message">Your message:</label><br />
+              <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
+            </div>
+            <input id="submit_button" type="submit" value="Send email" />
+          </form>
+        </div>
+
+      </div>
+
+      <div id="introduction", class="hidden">
+        <h2>Introduction</h2>
+        <p>TripAdvisor, founded in 2000, is a public company that operates various travel websites providing travel-related content, such as editorial reviews of hotels, in addition to providing a free forum for user discussion. The company has about 2400 employees worldwide, and websites that are part of the TripAdvisor Group attract greater than 100 million monthly views. While revenue is primarily generated through advertising, user-generated content (such as photographs, ratings, and reviews) has become the backbone of the company. TripAdvisor has become such an integral part of travel business worldwide, that it holds enough sway to single-handedly make or break a hotel depending on how that hotel is portrayed on the Trip Advisor website. SmarterTravel, founded in 1998 and acquired by TripAdvisor in 2007, offers a portfolio of travel sites that can be searched simultaneously to explore prices. Jetsetter, founded in 2009 and acquired by TripAdvisor in 2013, acts as an online travel agency catering to customers searching for higher quality (higher price) accommodations.</p>
+        <p>The massive amount of user-generated content posted on Trip Advisor is an invaluable resource of feedback for hotels and Trip Advisor itself. With this feedback, Trip Advisor can conduct internal improvement efforts, in addition to working with hotels to improve the customer experience. To date, Trip Advisor has used the labor intensive and potentially biased method of manually analyzing a small subset of the reviews. The goal of this project, therefore, is to construct an automated system (software) for analyzing free-form text responses. The output of this analysis will include extraction of informative word pairs (e.g. “great location”) in addition to calculation of a sentiment score. Further details are given below.</p>
+
+      </div>
+
+      <div id="method", class="hidden">
+        <p>To address the project, we decided to use text mining and machine learning to extract useful information from text reviews, automatically categorize sentence into topics, and provide sentiment score of a certain review. The overall framework of our method is shown as below:</p>
+        <img src="img/image1.png" width="100%">
+
+
+
+        Then we proposed steps for constructing this system are as follows:
+
+        <h3>Pair Extraction</h3>
+        <p>Notice in the example above that the insights we wish to extract are in the form of adjective-noun pairs. We use a package named “Spacy” to parse each sentence into a dependency tree in order to inform part of speech tagging. If a noun is the subject of the adjective, this noun shares the same head with the adjective. Therefore, we can use the dependency tree to identify noun-adjective associations.</p>
+
+        <h3>Sentiment Analysis</h3>
+        <p>A key advantage of the organization of the reviews in this dataset is that each review is known to be a response to either the “what I loved” or “what to know” sections of the questionnaire. This information can be used to help infer the type of sentiment expressed in the review. We propose a Bayesian approach for combining this prior information with the proposed adjective sentiment score that is calculated using NLTK. A potential model is to assume a normally distributed prior with a mean of 0.3 for the sentiment of reviews from “what to know” and 0.8 for the sentiment of reviews from “what I loved,” in combination with a normal likelihood based on the text analysis.</p>
+        <h3>Topic Analysis</h3>
+        <p></p>
+      </div>
+
+      <div id="results", class="hidden">
+
+      </div>
+
+      <div id="acknowledge", class="hidden">
+
+      </div>
+
+      <div id="contact", class="hidden">
+        
+      </div>
+
+
+
+      <!-- Site footer -->
+      <footer class="footer">
+        <p>&copy; Company 2014</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript">
+      $("ul.nav-justified li").each(function() {
+        $(this).on("click", function() {
+          var cur_href = $("li.active > a").attr('data');
+          $(cur_href).addClass('hidden')
+          $('ul.nav-justified li.active').removeClass('active')
+          $(this).addClass('active')
+          //var cur_href = $("li.active").attr('href');
+          var cur_href = $("li.active>a").attr('data');
+          //alert(cur_href);
+          $(cur_href).removeClass("hidden");
+        // Toggle classes of divs
+        });
+      });
+    </script>
+
+    <!-- <script src="js/jquery.js"></script> -->
+    <script src="js/typed.min.js"></script>
+    <script>
+      $(function(){
+        $(".slogan").typed({
+          strings: ["You have many reviews?", "Still manually reading them?", "Try our software!!"],
+          typeSpeed: 0,
+          loop: true
+        });
+      });
+    </script>
+
+  </body>
+</html>
