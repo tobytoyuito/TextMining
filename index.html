@@ -37,12 +37,12 @@
         <h3 class="text-muted">Opinion Mining and Sentiment Analysis of TripAdvisor Hotel Reviews</h3>
         <nav>
           <ul class="nav nav-justified">
-            <li class="active"><a href="#" data="#home">Home</a></li>
-            <li><a href="#" data="#introduction">Introduction</a></li>
-            <li><a href="#" data="#method">Method</a></li>
-            <li><a href="#" data="#results">Results</a></li>
-            <li><a href="#" data="#acknowledge">Acknowledge</a></li>
-            <li><a href="#" data="#contact">Contact</a></li>
+            <li class="active"><a id="ahome" href="#" data="#home">Home</a></li>
+            <li><a id="aintroduction" href="#" data="#introduction">Introduction</a></li>
+            <li><a id="amethod" href="#" data="#method">Method</a></li>
+            <li><a id="aresults" href="#" data="#results">Results</a></li>
+            <li><a id="aacknowledge" href="#" data="#acknowledge">Acknowledge</a></li>
+            <li><a id="acontact" href="#" data="#contact">Contact</a></li>
           </ul>
         </nav>
       </div>
@@ -66,21 +66,21 @@
         <div class="row">
           <div class="col-lg-4">
             <h2>Pair Extraction</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+            <p>Extract inportant information-adjective and noun pairs-from your reviews</p>
+            <p><a class="btn btn-primary detail" href="#pair" role="button" data="#amethod">View details &raquo;</a></p>
           </div>
           <div class="col-lg-4">
             <h2>Sentiment Analysis</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+            <p>Analyze the sentiment of the given reviews</p>
+            <p><a class="btn btn-primary detail" href="#sentiment" role="button" data="#amethod">View details &raquo;</a></p>
          </div>
           <div class="col-lg-4">
             <h2>Topic Analysis</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-            <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+            <p>Classify hotel reviews into 11 topics such as room, service, etc.</p>
+            <p><a class="btn btn-primary detail" href="#topic" role="button" data="#amethod">View details &raquo;</a></p>
           </div>
         </div>
-
+        <!--
         <div class="contact-us">
           <form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
             <div class="row">
@@ -98,6 +98,7 @@
             <input id="submit_button" type="submit" value="Send email" />
           </form>
         </div>
+      -->
 
       </div>
 
@@ -115,33 +116,45 @@
 
 
         Then we proposed steps for constructing this system are as follows:
+        <div id="pair">
+          <h3>Pair Extraction</h3>
+          <p>Notice in the example above that the insights we wish to extract are in the form of adjective-noun pairs. We use a package named “Spacy” to parse each sentence into a dependency tree in order to inform part of speech tagging. If a noun is the subject of the adjective, this noun shares the same head with the adjective. Therefore, we can use the dependency tree to identify noun-adjective associations.</p>
+        </div>
 
-        <h3>Pair Extraction</h3>
-        <p>Notice in the example above that the insights we wish to extract are in the form of adjective-noun pairs. We use a package named “Spacy” to parse each sentence into a dependency tree in order to inform part of speech tagging. If a noun is the subject of the adjective, this noun shares the same head with the adjective. Therefore, we can use the dependency tree to identify noun-adjective associations.</p>
+        <div id="sentiment">
+          <h3>Sentiment Analysis</h3>
+          <p>A key advantage of the organization of the reviews in this dataset is that each review is known to be a response to either the “what I loved” or “what to know” sections of the questionnaire. This information can be used to help infer the type of sentiment expressed in the review. We propose a Bayesian approach for combining this prior information with the proposed adjective sentiment score that is calculated using NLTK. A potential model is to assume a normally distributed prior with a mean of 0.3 for the sentiment of reviews from “what to know” and 0.8 for the sentiment of reviews from “what I loved,” in combination with a normal likelihood based on the text analysis.</p>
+          <img src="img/sentiment1.png" width="100%">
+        </div>
 
-        <h3>Sentiment Analysis</h3>
-        <p>A key advantage of the organization of the reviews in this dataset is that each review is known to be a response to either the “what I loved” or “what to know” sections of the questionnaire. This information can be used to help infer the type of sentiment expressed in the review. We propose a Bayesian approach for combining this prior information with the proposed adjective sentiment score that is calculated using NLTK. A potential model is to assume a normally distributed prior with a mean of 0.3 for the sentiment of reviews from “what to know” and 0.8 for the sentiment of reviews from “what I loved,” in combination with a normal likelihood based on the text analysis.</p>
-        <h3>Topic Analysis</h3>
-        <p></p>
+        <div id="topic">
+          <h3>Topic Analysis</h3>
+          <p></p>
+        </div>
       </div>
 
       <div id="results", class="hidden">
-
+          <img src="img/result1.png" width="100%">
       </div>
 
       <div id="acknowledge", class="hidden">
-
+        We thank Ryan Amari, Bryan Balin, and Chris Stasonis for providing the data and helpful insights.
       </div>
 
       <div id="contact", class="hidden">
-        
+        <p>Yaxiong Cai yaxiongcai@g.harvard.edu</p>
+        <p>Toby Du ruitaodu@g.harvard.edu</p>
+        <p>Peiheng Hu peihenghu@g.harvard.edu</p>
+        <p>Arjun Sanghvi asanghvi@g.harvard.edu</p>
+        <p>Instructor: Pavlos Protopapas pavlos@seas.harvard.edu</p>
+        <p>TF: Rahul Dave rahuldave@gmail.com</p>
       </div>
 
 
 
       <!-- Site footer -->
       <footer class="footer">
-        <p>&copy; Company 2014</p>
+        <p>&copy; IACS, Harvard</p>
       </footer>
 
     </div> <!-- /container -->
@@ -163,6 +176,24 @@
         // Toggle classes of divs
         });
       });
+
+      $(".detail").each(function() {
+        $(this).on("click", function() {
+          var cur_href = $("li.active > a").attr('data');
+          
+          $(cur_href).addClass('hidden')
+          $('ul.nav-justified li.active').removeClass('active')
+
+          var cur_href = $(this).attr('data');
+          //alert(("a"+cur_href));
+          $("a"+cur_href).parent().addClass('active')
+          //var cur_href = $("li.active").attr('href');
+          var cur_href = $("li.active>a").attr('data');
+          //alert(cur_href);
+          $(cur_href).removeClass("hidden");
+        // Toggle classes of divs
+        });
+      });
     </script>
 
     <!-- <script src="js/jquery.js"></script> -->
@@ -170,7 +201,7 @@
     <script>
       $(function(){
         $(".slogan").typed({
-          strings: ["You have many reviewst to read?", "Still manually reading them?", "Try our software!!"],
+          strings: ["You have many reviews to read?", "Still manually read them?", "Try our software!!"],
           typeSpeed: 0,
           loop: true
         });
