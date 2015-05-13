@@ -57,7 +57,7 @@
           <p>
             <span class="slogan"></span>
           </p>
-          <p><a class="btn btn-lg btn-success" href="https://murmuring-garden-1723.herokuapp.com/" role="button">Try Live Demo</a></p>
+          <p><a class="btn btn-lg btn-success" href="https://murmuring-garden-1723.herokuapp.com/" role="button" target="_blank">Try Live Demo</a></p>
         </div>
 
         <h4>Three subtasks</h4>
@@ -80,16 +80,16 @@
             <p><a class="btn btn-primary detail" href="#topic" role="button" data="#amethod">View details &raquo;</a></p>
           </div>
         </div>
-        <!--
+
         <div class="contact-us">
-          <form id="contact_form" action="#" method="POST" enctype="multipart/form-data">
+          <form id="contact_form" action="http://formspree.io/tobytoyuito@gmail.com" method="POST" enctype="multipart/form-data">
             <div class="row">
               <label for="name">Your name:</label><br />
               <input id="name" class="input" name="name" type="text" value="" size="30" /><br />
             </div>
             <div class="row">
               <label for="email">Your email:</label><br />
-              <input id="email" class="input" name="email" type="text" value="" size="30" /><br />
+              <input id="email" class="input" name="_replyto" type="text" value="" size="30" /><br />
             </div>
             <div class="row">
               <label for="message">Your message:</label><br />
@@ -98,7 +98,7 @@
             <input id="submit_button" type="submit" value="Send email" />
           </form>
         </div>
-      -->
+      
 
       </div>
 
@@ -106,10 +106,13 @@
         <h2>Introduction</h2>
         <p>TripAdvisor, founded in 2000, is a public company that operates various travel websites providing travel-related content, such as editorial reviews of hotels, in addition to providing a free forum for user discussion. The company has about 2400 employees worldwide, and websites that are part of the TripAdvisor Group attract greater than 100 million monthly views. While revenue is primarily generated through advertising, user-generated content (such as photographs, ratings, and reviews) has become the backbone of the company. TripAdvisor has become such an integral part of travel business worldwide, that it holds enough sway to single-handedly make or break a hotel depending on how that hotel is portrayed on the Trip Advisor website. SmarterTravel, founded in 1998 and acquired by TripAdvisor in 2007, offers a portfolio of travel sites that can be searched simultaneously to explore prices. Jetsetter, founded in 2009 and acquired by TripAdvisor in 2013, acts as an online travel agency catering to customers searching for higher quality (higher price) accommodations.</p>
         <p>The massive amount of user-generated content posted on Trip Advisor is an invaluable resource of feedback for hotels and Trip Advisor itself. With this feedback, Trip Advisor can conduct internal improvement efforts, in addition to working with hotels to improve the customer experience. To date, Trip Advisor has used the labor intensive and potentially biased method of manually analyzing a small subset of the reviews. The goal of this project, therefore, is to construct an automated system (software) for analyzing free-form text responses. The output of this analysis will include extraction of informative word pairs (e.g. “great location”) in addition to calculation of a sentiment score. Further details are given below.</p>
+        <p>Here is the relationship between TripAdvisor hotels and customers.</p>
+        <img src="img/intro.png" width="100%">
 
       </div>
 
       <div id="method", class="hidden">
+        <h2>Method</h2>
         <p>To address the project, we decided to use text mining and machine learning to extract useful information from text reviews, automatically categorize sentence into topics, and provide sentiment score of a certain review. The overall framework of our method is shown as below:</p>
         <img src="img/image1.png" width="100%">
 
@@ -119,11 +122,14 @@
         <div id="pair">
           <h3>Pair Extraction</h3>
           <p>Notice in the example above that the insights we wish to extract are in the form of adjective-noun pairs. We use a package named “Spacy” to parse each sentence into a dependency tree in order to inform part of speech tagging. If a noun is the subject of the adjective, this noun shares the same head with the adjective. Therefore, we can use the dependency tree to identify noun-adjective associations.</p>
+          <img src="img/denpendency.png" width="100%">
+
         </div>
 
         <div id="sentiment">
           <h3>Sentiment Analysis</h3>
           <p>A key advantage of the organization of the reviews in this dataset is that each review is known to be a response to either the “what I loved” or “what to know” sections of the questionnaire. This information can be used to help infer the type of sentiment expressed in the review. We propose a Bayesian approach for combining this prior information with the proposed adjective sentiment score that is calculated using NLTK. A potential model is to assume a normally distributed prior with a mean of 0.3 for the sentiment of reviews from “what to know” and 0.8 for the sentiment of reviews from “what I loved,” in combination with a normal likelihood based on the text analysis.</p>
+          <p>Below are the sentiment scores distribution separated by the two review types.</p>
           <img src="img/sentiment1.png" width="100%">
         </div>
 
@@ -138,7 +144,9 @@
       </div>
 
       <div id="acknowledge", class="hidden">
-        We thank Ryan Amari, Bryan Balin, and Chris Stasonis for providing the data and helpful insights.
+        <p>We thank Ryan Amari, Bryan Balin, and Chris Stasonis for providing the data and helpful insights.</p>
+        <p>Our capstone project is from the AC297r course in IACS, Harvard. Here is the link to the class<a href="http://ac297r.org/" target="_blank"></a></p>
+
       </div>
 
       <div id="contact", class="hidden">
