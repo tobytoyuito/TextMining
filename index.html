@@ -39,10 +39,9 @@
           <ul class="nav nav-justified">
             <li class="active"><a id="ahome" href="#" data="#home">Home</a></li>
             <li><a id="aintroduction" href="#" data="#introduction">Introduction</a></li>
-            <li><a id="amethod" href="#" data="#method">Method</a></li>
+            <li><a id="amethod" href="#" data="#method">Methods</a></li>
             <li><a id="aresults" href="#" data="#results">Results</a></li>
-            <li><a id="aacknowledge" href="#" data="#acknowledge">Acknowledge</a></li>
-            <li><a id="acontact" href="#" data="#contact">Contact</a></li>
+            <li><a id="aconclusions" href="#" data="#conclusions">Conclusions</a></li>
           </ul>
         </nav>
       </div>
@@ -82,18 +81,20 @@
         </div>
 
         <div class="contact-us">
+          <h2>Contact Us</h2>
+          <p>If you are interested in our project or want to know more detail algorithm of our software, feel free to contact us!</p>
           <form id="contact_form" action="http://formspree.io/tobytoyuito@gmail.com" method="POST" enctype="multipart/form-data">
             <div class="row">
               <label for="name">Your name:</label><br />
-              <input id="name" class="input" name="name" type="text" value="" size="30" /><br />
+              <input id="name" class="input" name="name" type="text" value="" size="40" /><br />
             </div>
             <div class="row">
               <label for="email">Your email:</label><br />
-              <input id="email" class="input" name="_replyto" type="text" value="" size="30" /><br />
+              <input id="email" class="input" name="_replyto" type="text" value="" size="40" /><br />
             </div>
             <div class="row">
               <label for="message">Your message:</label><br />
-              <textarea id="message" class="input" name="message" rows="7" cols="30"></textarea><br />
+              <textarea id="message" class="input" name="message" rows="7" cols="40"></textarea><br />
             </div>
             <input id="submit_button" type="submit" value="Send email" />
           </form>
@@ -112,7 +113,7 @@
       </div>
 
       <div id="method", class="hidden">
-        <h2>Method</h2>
+        <h2>Methods</h2>
         <p>To address the project, we decided to use text mining and machine learning to extract useful information from text reviews, automatically categorize sentence into topics, and provide sentiment score of a certain review. The overall framework of our method is shown as below:</p>
         <img src="img/image1.png" width="100%">
 
@@ -123,6 +124,7 @@
           <h3>Pair Extraction</h3>
           <p>Notice in the example above that the insights we wish to extract are in the form of adjective-noun pairs. We use a package named “Spacy” to parse each sentence into a dependency tree in order to inform part of speech tagging. If a noun is the subject of the adjective, this noun shares the same head with the adjective. Therefore, we can use the dependency tree to identify noun-adjective associations.</p>
           <img src="img/denpendency.png" width="100%">
+
 
         </div>
 
@@ -140,22 +142,25 @@
       </div>
 
       <div id="results", class="hidden">
-          <img src="img/result1.png" width="100%">
+        <h2>Results</h2>
+        <img src="img/result1.png" width="100%">
       </div>
 
-      <div id="acknowledge", class="hidden">
+      <div id="conclusions", class="hidden">
+        <h2>Conclusions</h2>
+        <img src="img/acknowledge.png" width="100%">
+        <h3>Acknowledge</h3>
         <p>We thank Ryan Amari, Bryan Balin, and Chris Stasonis for providing the data and helpful insights.</p>
         <p>Our capstone project is from the AC297r course in IACS, Harvard. Here is the link to the class<a href="http://ac297r.org/" target="_blank"></a></p>
 
-      </div>
+        <h3>Contact information</h3>
+        <p>Yaxiong Cai yaxiongcai at g.harvard.edu</p>
+        <p>Toby Du ruitaodu at g.harvard.edu</p>
+        <p>Peiheng Hu peihenghu at g.harvard.edu</p>
+        <p>Arjun Sanghvi asanghvi at g.harvard.edu</p>
+        <p>Instructor: Pavlos Protopapas pavlos at seas.harvard.edu</p>
+        <p>TF: Rahul Dave rahuldave at gmail.com</p>
 
-      <div id="contact", class="hidden">
-        <p>Yaxiong Cai yaxiongcai@g.harvard.edu</p>
-        <p>Toby Du ruitaodu@g.harvard.edu</p>
-        <p>Peiheng Hu peihenghu@g.harvard.edu</p>
-        <p>Arjun Sanghvi asanghvi@g.harvard.edu</p>
-        <p>Instructor: Pavlos Protopapas pavlos@seas.harvard.edu</p>
-        <p>TF: Rahul Dave rahuldave@gmail.com</p>
       </div>
 
 
