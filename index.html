@@ -227,7 +227,7 @@
 
           <p>One of the most common edge cases not addressed by this model averaging approach is the issue of negation.  The simplest method would be to flip the sentiment score about the 0.5, or neutral, level. However, describing an experience as “not bad” is not the same as saying that it was “good.” Namely, the former is generally of more neutral sentiment than the latter. To account for this, we first remove the negation term (e.g. “not”), calculate the sentiment score using the approach detailed above, and quantify the sentiment through the following mapping:</p>
 
-          <img src="img/negation.png">
+          <img src="img/negation.png" style="width:350px">
 
           <p>This transformation can be characterized as reversing the sentiment and making it more neutral. An example is provided here:</p>
 
@@ -239,7 +239,7 @@
 
 
           <p>Below are the sentiment scores distribution separated by the two review types. From the density plots, we can see the difference between the two observations and also the impact of the prior choice.</p>
-          <img src="img/sentiment1.png" width="60%">
+          <img src="img/sentiment1.png" style="width:750px">
         </div>
       </div>
 
@@ -268,9 +268,18 @@
 
       <div id="conclusions", class="hidden">
         <h2>Conclusions</h2>
-        <h3>Acknowledge</h3>
+        <p>We constructed a system for automated analysis of free form text reviews using hotel data provided by Smarter Travel, a subsidiary of TripAdvisor. In particular, we implemented lexical parsers for information extraction (F1 score: 68%), machine learning algorithms for classification of adjective-noun pairs (F1 score range: 53-71%), and model averaging of unsupervised and supervised approaches with integration of Bayesian priors to quantify sentiment (accuracy: 85%).</p>
+
+        <p>There are several opportunities to improve the performance of the proposed methods. Regarding topic classification, we would most certainly benefit from a larger training set. The 1500 sentences that we manually labeled do not represent all of the categories equally, and the F1 scores tend to correlate with sample size. We could also pursue other approaches altogether. For example, an initial attempt at implementing Latent Dirichlet Allocation was not successful, but perhaps there are useful concepts to adapt from topic modeling. With regard to pair extraction, there are likely many more edge cases that need to be addressed. This is a slow process, but it is necessary for dealing with the complexity inherent in largely unstructured text data. Furthermore, it would be interesting to explore methods for dealing with sarcasm or the use of metaphors. The third component to the project, sentiment analysis, has already achieved performance near the limit of human agreement. However, we may improve our results by using supervised learning with a training set of labeled product reviews instead of movie reviews. In fact, ideally we would manually label the sentiment of thousands of hotel reviews from the given data set and use those samples to train the classifier.</p>
+
+        <p>A key outcome of this project was the integration of the distinct components into an easy-to-use software product. To this end, we have wrapped all of the functionality into a complete software package written in Python, following PEP documentation conventions for code maintainability and clarity. While we have not addressed throughput directly, it does not appear to be a limiting factor, as we have been able to process 200 reviews per 14 seconds on a basic laptop. Moreover, we have built an interactive website that takes in any hotel review and provides the extracted adjective-noun pairs, topic categories, and sentiment scores. The website can be found here: <a href="http://murmuring-garden-1723.herokuapp.com/">Demo</a></p>
+
+        <p>Of course, the framework we proposed and executed here is sufficiently broad such that application to other domains would require only moderate tweaking. Such technology could be used to provide key insights into consumer preferences or user feedback of any product (e.g. reviews of online purchases, movie reviews, comments on magazine articles). These methods could also be extended to allow for real-time exploration of increasingly large text corpora, such as Twitter streams. The utility to be derived from automated analysis of text is undeniable, and technical developments on this front have the potential to transform entire industries.</p>
+        <br>
+
+        <h3>Acknowledgements</h3>
         <p>We thank Ryan Amari, Bryan Balin, and Chris Stasonis for providing the data and helpful insights.</p>
-        <p>Our capstone project is from the AC297r course in IACS, Harvard. Here is the link to the class <a href="http://ac297r.org/" target="_blank">AC297r</a></p>
+        <p>This work was done as part of the AC297r Capstone course at Harvard. You can find more information and other cool projects here: <a href="http://ac297r.org/" target="_blank">AC297r</a></p>
 
         <h3>Contact information</h3>
         <p>Yaxiong Cai: yaxiongcai at g.harvard.edu</p>
