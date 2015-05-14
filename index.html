@@ -33,6 +33,9 @@
       form {
         margin-left:18px;
       }
+      ol>li {
+        font-size:15px;
+      }
     </style>
 
 
@@ -221,8 +224,22 @@
             <li>Assume a Bayesian model to combine the results, with two regular methods as two distinct observations, and information from review type as prior</li>
             <li>Average the sentiment scores over all pairs in a topic</li>
           </ol>
+
+          <p>One of the most common edge cases not addressed by this model averaging approach is the issue of negation.  The simplest method would be to flip the sentiment score about the 0.5, or neutral, level. However, describing an experience as “not bad” is not the same as saying that it was “good.” Namely, the former is generally of more neutral sentiment than the latter. To account for this, we first remove the negation term (e.g. “not”), calculate the sentiment score using the approach detailed above, and quantify the sentiment through the following mapping:</p>
+
+          <img src="img/negation.png">
+
+          <p>This transformation can be characterized as reversing the sentiment and making it more neutral. An example is provided here:</p>
+
+          <div class="well">
+            Pair: “not attentive staff”<br>
+            Sentiment score: 0.339 <br>
+            Interpretation: 33.9% probability that the text is positive
+          </div>
+
+
           <p>Below are the sentiment scores distribution separated by the two review types. From the density plots, we can see the difference between the two observations and also the impact of the prior choice.</p>
-          <img src="img/sentiment1.png">
+          <img src="img/sentiment1.png" width="60%">
         </div>
       </div>
 
@@ -232,11 +249,18 @@
         <h2>Results</h2>
         <p>After using all the methods in adjective/ nouns extraction, topic classification and sentimental analysis, we can summarize the accuracy of each part in the following framework:</p>
         <img src="img/result1.png">
-        <p>In addition to the functionality above, we have wrapped up everything into a complete software package, which makes the product easy to use. Moreover, we have build an interactive website that for whatever hotel review you define and input, we can give you the expected adjective/ nouns pair, topic category and sentimental score. The website link is listed here: <a class="btn btn-lg btn-success" href="https://murmuring-garden-1723.herokuapp.com/" role="button" target="_blank">Try Live Demo</a></p>
 
-        <p>In fact, the methods that we have developed here not only limit to hotel reviews, but can also be easily extended to any free form reviews such as movie reviews or restaurant reviews.</p>
+        <p>A fully optimized data structure is created that provides the capability and functionality to store all of the extracted keywords, adjectives, and sentiment scores into corresponding classified categories for each hotel. This information will be presented in summary, with the option of full output, for ease of use by Trip Advisor. Visualizations are presented with the text output for further insight as demonstrated below.</p>
 
-        <p>For future improvement, we thing we can definitely enhance is the topic classification score. Due to limited human resource, we only have 1500 sentences as training set. Since each sentence is transferred into a binary vector that contains all unique words, it is obvious that the more words we have here, the more comprehensive of training can achieve, which turns out to be a matter of having a larger training set. If the training set can be enlarged to about 15,000 sentences with each category unbiased divided, we have confidence that the F1 score can be largely improved.</p>
+        <p>The text output consists of noun-adjective pairs separated into categories and the average sentiment score per category.</p>
+
+        <img src="img/result2.png" style="width:350px">
+
+        <p>Additionally, visualizations can be provided to aid in interpretability and inform insights:</p>
+
+        <img src="img/result3.png"style="width:700px">
+
+        <p>On the left is a sentiment score density plot for the category “ambiance” using review data from the hotel Carmel Valley Ranch. It can be easily seen that this hotel is better than most of the other hotels in this category. On the right is another sentiment score density plot that shows the distribution of average sentiment scores across all categories for all hotels. The red lines indicate the mean and 95% confidence interval for the average sentiment across all categories for hotel Carmel Valley Ranch. From the plot we might infer that this hotel is in the median range overall.</p>
 
 
         
@@ -262,7 +286,7 @@
 
       <!-- Site footer -->
       <footer class="footer">
-        <p>&copy; IACS, Harvard</p>
+        <p>&copy; Cai, Du, Hu, Sanghvi</p>
       </footer>
 
     </div> <!-- /container -->
