@@ -22,13 +22,13 @@
 
     <style>
       p {
-        font-size: 18px;
+        font-size: 15px;
       }
       img {
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width:60%;
+        width:50%;
       }
       form {
         margin-left:18px;
@@ -195,15 +195,25 @@
         </div>
 
         <div id="sentiment">
-          <h3>2. Sentiment Analysis</h3>
-          <p>One of the most important results for the project is to provide the sentiment scores for each hotel overall as well as for each specific category within each hotel. The sentiment scores provided are expected to be interpretable, comparable and accurate. </p>
-          <p>To be accurate, sentiment scores are expected to be extracted to provide decent result. To achieve this, two very distinct sentiment extraction algorithm are adopted.</p>
-          <h4>2.1 SentiWordnet</h4>
-          <p>The first one is to look up the sentiment scores from the SentiWordnet in NLTK, a lexical resource for opinion mining. SentiWordNet assigns to each synset of WordNet three sentiment scores: positivity, negativity, objectivity. What used in our project is the probability of positivity and negativity. For some of the words, there are multiple meanings and thus, very different sentiment scores. To figure out which specific sentiment we want to choose, we applied an algorithm called Lesk. The Lesk algorithm is a classical algorithm for word sense disambiguation. It compares the dictionary definition of an ambiguous word with the terms contained in its neighborhood and find the highest similarity from all the definitions and thus pin down the best possible sentiment score. Both scores of positivity and negativity ranges from 0 to 1, so the overall score from SentiWordNet is indeed from -1 to 1 because of the negative sign of negativity scores. To get it within range of 0 to 1, SentiWordNet score is uniformly mapped to range of 0 to 1 as the one sentiment extraction result. </p>
-          <h4>2.2 Naïve Bayes</h4>
-          <p>Another method is a supervised machine learning algorithm. The training data is from an already labeled movie review data. The label is either positive or negative. After training this, we take the hotel review pairs as input to get the probability that it belongs to positive label. We chose Naïve Bayes it has been widely used in text classification such as spam filtering. It is simple and fast to use and also it works well with multiple uncorrelated features.</p>
-          <h4>2.3 Prior</h4>
-          <p>Besides the two distinct method listed above, a Bayesian related method is purposed to take advantage of the reviews in this dataset that in each review is known to be a response to either the “what I loved” or “what to know” sections of the questionnaire. This information can be used to help infer the type of sentiment expressed in the review. The proposed Bayesian approach tries to take this useful information as the prior information, and combine it with the calculated adjective sentiment scores which are regarded as observations to provide a more holistic and robust sentiment score as the final result. Based on the preprocessing of the review data, we decided to assume a normally distributed prior with a mean of 0.3 for the sentiment of reviews from “what to know” and 0.7 for the sentiment of reviews from “what I loved,” in combination with a normal likelihood based on the text analysis. Because of the normal-normal conjugacy and under the assumption of equal variance of prior and likelihood, the posterior mean of the normal-normal posterior, which is the combined sentiment score to be shown as final result, can be easily simplified and calculated following the formula shown below:</p>
+          <h3>3. Sentiment Analysis</h3>
+          <p>One of the most important outcomes of the project is to provide the sentiment scores for each hotel overall as well as for each specific category within each hotel. The sentiment scores provided are expected to be interpretable, comparable and accurate.</p>
+          <p>To be interpretable, each sentiment score is expected to be between 0 and 1, corresponding to the probability that the text is of positive inclination. A concrete example is given here:</p>
+
+          <div class="well">
+            Pair: “beautiful views”<br>
+            Sentiment score: 0.725 <br>
+            Interpretation: 72.5% probability that the text is positive
+          </div>
+
+          <p>To be comparable across different hotels and different categories, universal score extraction methods that can act on all pairs are expected. For greatest accuracy, two very distinct sentiment extraction algorithms are adopted.</p>
+
+          <h4>3.1 SentiWordnet</h4>
+          <p>The first one is to look up the sentiment scores from the SentiWordnet in NLTK, a lexical resource for opinion mining. SentiWordNet assigns to each synset of WordNet three sentiment scores: positivity, negativity, and objectivity. In this analysis we are particularly interesting in the probability of positivity and negativity. For some of the words, there are multiple meanings and thus, very different sentiment scores. To figure out which specific sentiment we want to choose, we applied an algorithm called Lesk. The Lesk algorithm is a classical algorithm for word sense disambiguation. It compares the dictionary definition of an ambiguous word with the terms contained in its neighborhood and finds the highest similarity from all the definitions. The sentiment associated with this particular definition of the word is assumed to be the most relevant. Both scores of positivity and negativity ranges from 0 to 1, so the overall score from SentiWordNet is indeed from -1 to 1 (negativity scores are, appropriately, negative). We map this score to the interval 0 to 1 for probabilistic interpretation.</p>
+          <h4>3.2 Naïve Bayes</h4>
+          <p>The second method is a supervised machine learning algorithm. The training data is a corpus of movie review data that has been labeled as either positive or negative (i.e. scored for polarity). We implemented a Naïve Bayes classifier because it has been widely used in text classification such as spam filtering. It is simple and fast to use and also it works well with multiple uncorrelated features. After training the classifier, we take the hotel review pairs as input to get the probability that it belongs to the positive label.</p>
+
+          <h4>3.3 Prior</h4>
+          <p>One key characteristic of this dataset is the fact that each review is known to be a response either to the prompt “what I loved” or “what to know.” This information can be used to help infer the type of sentiment expressed in the review. We implemented a Bayesian approach to combine this useful prior information with the calculated adjective sentiment scores (regarded as observations) from the previous methods. Based on the preprocessing of the review data, we decided to assume a normally distributed prior with a mean of 0.3 for the sentiment of reviews from “what to know” and 0.7 for the sentiment of reviews from “what I loved,” in combination with a normal likelihood based on the text analysis. Because of the normal-normal conjugacy and under the assumption of equal variance of prior and likelihood, the posterior mean of the normal-normal posterior, which is the combined sentiment score to be shown as final result, can be easily simplified and calculated following the formula shown below:</p>
           <img src="img/sentiment.png" style="width:250px">
           <p>As a brief summary, the sentiment scores are calculated as follows:</p>
           <ol>
