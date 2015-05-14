@@ -137,10 +137,10 @@
 
         <p>Then we proposed steps for constructing this system are as follows:</p>
         <div id="pair">
-          <h3>Pair Extraction</h3>
-          <h5>Dependency Tree</h5>
+          <h3>1. Pair Extraction</h3>
+          <h4>1.1 Dependency Tree</h4>
           <p>Notice in the example above that the insights we wish to extract are in the form of adjective-noun pairs. We use a package named “spaCy” to parse each sentence into a dependency tree. A dependency tree is a grammatical model that uses part of speech tagging and contextual elements to establish hierarchical relations between words and phrases within a sentence. Within the tree structure, if word A is under word B, it means word A depends on B. If a noun is the subject of the adjective, this noun shares the same head with the adjective. Therefore, we can use the dependency tree to identify noun-adjective associations.</p>
-          <p>Here is an example of the dependency tree for the sentence: “Location is great and easily walkable to downtown Napa”</p>
+          <p>Here is an example of the dependency tree for the sentence:<br> “Location is great and easily walkable to downtown Napa”</p>
           <img src="img/denpendency.png">
           <p>To find the noun-adjective pairs we use the following procedure:</p>
           <p>For each noun:</p>
@@ -150,16 +150,17 @@
           <p>Note that the next step in this process would be to consider the nouns “downtown” and “Napa.” In both cases, the associated head is not associated with any adjectives. Therefore, we do not extract these words.</p>
           <p>The underlying algorithm that enables the construction of the dependency tree is based on the training of a shift-reduce dependency parser on the popular Penn Treebank corpus. While this corpus consists of published articles from the Wall Street Journal, our data has no such guaranteed grammatical structure. Indeed, many of the reviews we analyze are collections of text fragments, not sentences. As a result, we can achieve an F1 score of around 60%. To improve this result we looked to another method.</p>
           <br>
+          <h4>1.2 Chunk tag</h4>
           <p>This method uses the Penn Treebank II tags in the package “Pattern”. Instead of parsing a sentence into a dependency tree, it tags each word with two labels: POS tags, Chunk tags. Chunk tags are assigned to phrases. If a group of words is a phrase, they are assigned the same chunk tag and there is an extra tag “B-” to indicate the preceding word of this chunk.</p>
           <p>A given adjective may be found associated with the tag “NP”: noun phrase or the tag “ADJP”: adjective phrase. To extract noun and adjective pairs, we need to deal with these two cases differently.</p>
-          <p>For “NP”:</p> 
+          <p>FCase 1: “NP”:</p> 
 
            <pre>                       I     had        a       delicious   pizza      in     the    restaurant
              tags:     NP     VP       B-NP        NP          NP     B-PP    PP         PP</pre>
 
           <p>This is the easy case, in which the adjective and noun (“delicious pizza”) are in the same chunk. </p>
 
-          <p>For “ADJP”:</p>
+          <p>Case 2: “ADJP”:</p>
           <pre>                    The     staff    is   incredibly    friendly.
           tags:     B-NP     NP      VP     B-ADJP       ADJP</pre>
 
@@ -173,15 +174,45 @@
         </div>
 
         <div id="sentiment">
-          <h3>Sentiment Analysis</h3>
-          <p>A key advantage of the organization of the reviews in this dataset is that each review is known to be a response to either the “what I loved” or “what to know” sections of the questionnaire. This information can be used to help infer the type of sentiment expressed in the review. We propose a Bayesian approach for combining this prior information with the proposed adjective sentiment score that is calculated using NLTK. A potential model is to assume a normally distributed prior with a mean of 0.3 for the sentiment of reviews from “what to know” and 0.8 for the sentiment of reviews from “what I loved,” in combination with a normal likelihood based on the text analysis.</p>
-          <p>Below are the sentiment scores distribution separated by the two review types.</p>
+          <h3>2. Sentiment Analysis</h3>
+          <p>One of the most important results for the project is to provide the sentiment scores for each hotel overall as well as for each specific category within each hotel. The sentiment scores provided are expected to be interpretable, comparable and accurate. </p>
+          <p>To be accurate, sentiment scores are expected to be extracted to provide decent result. To achieve this, two very distinct sentiment extraction algorithm are adopted.</p>
+          <h4>2.1 SentiWordnet</h4>
+          <p>The first one is to look up the sentiment scores from the SentiWordnet in NLTK, a lexical resource for opinion mining. SentiWordNet assigns to each synset of WordNet three sentiment scores: positivity, negativity, objectivity. What used in our project is the probability of positivity and negativity. For some of the words, there are multiple meanings and thus, very different sentiment scores. To figure out which specific sentiment we want to choose, we applied an algorithm called Lesk. The Lesk algorithm is a classical algorithm for word sense disambiguation. It compares the dictionary definition of an ambiguous word with the terms contained in its neighborhood and find the highest similarity from all the definitions and thus pin down the best possible sentiment score. Both scores of positivity and negativity ranges from 0 to 1, so the overall score from SentiWordNet is indeed from -1 to 1 because of the negative sign of negativity scores. To get it within range of 0 to 1, SentiWordNet score is uniformly mapped to range of 0 to 1 as the one sentiment extraction result. </p>
+          <h4>2.2 Naïve Bayes</h4>
+          <p>Another method is a supervised machine learning algorithm. The training data is from an already labeled movie review data. The label is either positive or negative. After training this, we take the hotel review pairs as input to get the probability that it belongs to positive label. We chose Naïve Bayes it has been widely used in text classification such as spam filtering. It is simple and fast to use and also it works well with multiple uncorrelated features.</p>
+          <h4>2.3 Prior</h4>
+          <p>Besides the two distinct method listed above, a Bayesian related method is purposed to take advantage of the reviews in this dataset that in each review is known to be a response to either the “what I loved” or “what to know” sections of the questionnaire. This information can be used to help infer the type of sentiment expressed in the review. The proposed Bayesian approach tries to take this useful information as the prior information, and combine it with the calculated adjective sentiment scores which are regarded as observations to provide a more holistic and robust sentiment score as the final result. Based on the preprocessing of the review data, we decided to assume a normally distributed prior with a mean of 0.3 for the sentiment of reviews from “what to know” and 0.7 for the sentiment of reviews from “what I loved,” in combination with a normal likelihood based on the text analysis. Because of the normal-normal conjugacy and under the assumption of equal variance of prior and likelihood, the posterior mean of the normal-normal posterior, which is the combined sentiment score to be shown as final result, can be easily simplified and calculated following the formula shown below:</p>
+          <img src="img/sentiment.png" style="width:250px">
+          <p>As a brief summary, the sentiment scores are calculated as follows:</p>
+          <ol>
+            <li>Calculate the sentiment score of each pair using 3 different approaches</li>
+            <li>Assume a Bayesian model to combine the results, with two regular methods as two distinct observations, and information from review type as prior</li>
+            <li>Average the sentiment scores over all pairs in a topic</li>
+          </ol>
+          <p>Below are the sentiment scores distribution separated by the two review types. From the density plots, we can see the difference between the two observations and also the impact of the prior choice.</p>
           <img src="img/sentiment1.png">
         </div>
 
         <div id="topic">
-          <h3>Topic Analysis</h3>
-          <p></p>
+          <h3>3. Topic Analysis</h3>
+          <p>Instead of presenting an unordered list of adjective-noun pairs in the output, we wanted to present the results in an easily interpretable manner. When deciding how to organize the information, we looked to hotel rating systems and found that they tend to consist of only a handful of categories. For example, on TripAdvisor, users provide ratings in the categories of: location, sleep quality, rooms, service, value, and cleanliness. We wanted to stay consistent with this framework, but we also worked with TripAdvisor to identify other categories of particular interest to them. Therefore, in addition to the previously mentioned categories, we also considered: ambiance, amenities, food, Jet Setter, and property. These categories act as the bins in which we place each of the adjective-noun pairs, and provide a more fine-grained view into the performance of hotels in different aspects.</p>
+          <h4>3.1 Random Forest Classification</h4>
+          <p>Random forests are a common machine learning method for classification and regression that operate by developing a series of decision trees at training time and outputting the class that has been most commonly identified by individual trees.</p>
+          <p>One of the interesting outcomes of the random forest algorithm is the information about the importance of features. Here we show the important features for the “sleep quality” classifier:</p>
+          <img src="img/topic1.png">
+
+          <h4>3.2 Logistic Regression</h4>
+          <p>Logistic regression is a common machine learning method that takes in one or more predictor variables and outputs the corresponding response that the intake variable belongs to.</p>
+          <p>Here we choose to use 10 folder cross validation to check our result. The plotting of the 10 folder cross validation with different number of trees is shown as below:</p>
+          <img src="img/topic2.png">
+          <p>As we can observe above, when the cutoff score is 0.2 here, we can achieve the maximum F1 score. So we choose 0.2 here. However, we have added more features and altered the cutoff score, which will be analyzed and include in part4 further improvement.</p>
+          <p>One big benefit of using logistic regression instead of random forest is that it can give us the probability of how likely each category can be selected. For example:</p>
+          <p>Usually, logistic regression just set a cutoff of 0.5 as the criterion about whether we accept a topic of not. So here, we categorize the input “Delicious food” as topic “food” and not anything else.</p>
+          <p>However, in our case, we also have the information of adjective/ noun pairs. So we decided to include those information and make an advanced weighted cutoff score here.</p>
+          <img src="img/topic3.png">
+          <h4>3.3 Pair to Category</h4>
+          <p>After classifying the each sentence with every category classifier, we can be sure that the pairs with in that sentence can be only belong to the chosen categories. With the smaller set of categories, we make use of both sentence logistic regression and adjective/noun pair logistic regression, taking 70% weight on adjective/noun pair logistic regression and 30% weight on sentence logistic regression, and set a new cutoff. In this way, the pair can be closely associated with the corresponding category with improved precision and recall</p>
         </div>
       </div>
 
