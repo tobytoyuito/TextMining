@@ -18,7 +18,10 @@
     <!-- Custom styles for this template -->
     <link href="css/justified-nav.css" rel="stylesheet">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet" id="font-awesome-css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" type="text/css" media="screen">
+
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
     <style>
       p {
@@ -36,6 +39,21 @@
       ol>li {
         font-size:15px;
       }
+      .back-to-top {
+        position: fixed;
+        bottom: 2em;
+        right: 0px;
+        text-decoration: none;
+        color: #000000;
+        background-color: rgba(235, 235, 235, 0.80);
+        font-size: 12px;
+        padding: 1em;
+        display: none;
+      }
+
+      .back-to-top:hover {    
+          background-color: rgba(135, 135, 135, 0.50);
+      }
     </style>
 
 
@@ -47,6 +65,7 @@
   </head>
 
   <body>
+    <a href="#" class="back-to-top">Back to Top</a>
 
     <div class="container">
 
@@ -83,8 +102,8 @@
         <!-- Example row of columns -->
         <div class="row">
           <div class="col-lg-4">
-            <h2>Information Extraction</h2>
-            <p>Extract the most informative words.</p>
+            <h2>Keyword Extraction</h2>
+            <p>Extract the most informative words from reviews.</p>
             <p><a class="btn btn-primary detail" href="#pair" role="button" data="#amethod">View details &raquo;</a></p>
           </div>
           <div class="col-lg-4">
@@ -94,7 +113,7 @@
          </div>
           <div class="col-lg-4">
             <h2>Topic Analysis</h2>
-            <p>Classification of extracted text into broad categories.</p>
+            <p>Classification of keywords into topics.</p>
             <p><a class="btn btn-primary detail" href="#topic" role="button" data="#amethod">View details &raquo;</a></p>
           </div>
         </div>
@@ -125,8 +144,8 @@
       <div id="introduction", class="hidden">
         <h2>Introduction</h2>
         <p>TripAdvisor, founded in 2000, is a public company that operates various travel websites providing travel-related content, such as editorial reviews of hotels, in addition to providing a free forum for user discussion. The company has about 2400 employees worldwide, and websites that are part of the TripAdvisor Group attract greater than 100 million monthly views. While revenue is primarily generated through advertising, user-generated content (such as photographs, ratings, and reviews) has become the backbone of the company. TripAdvisor has become such an integral part of travel business worldwide, that it holds enough sway to single-handedly make or break a hotel depending on how that hotel is portrayed on the Trip Advisor website. SmarterTravel, founded in 1998 and acquired by TripAdvisor in 2007, offers a portfolio of travel sites that can be searched simultaneously to explore prices. Jetsetter, founded in 2009 and acquired by TripAdvisor in 2013, acts as an online travel agency catering to customers searching for higher quality (higher price) accommodations.</p>
-        <p>The massive amount of user-generated content posted on Trip Advisor is an invaluable resource of feedback for hotels and Trip Advisor itself. With this feedback, Trip Advisor can conduct internal improvement efforts, in addition to working with hotels to improve the customer experience. To date, Trip Advisor has used the labor intensive and potentially biased method of manually analyzing a small subset of the reviews. The goal of this project, therefore, is to construct an automated system (software) for analyzing free-form text responses. The output of this analysis will include extraction of informative word pairs (e.g. “great location”) in addition to calculation of a sentiment score. Further details are given below.</p>
-        <p>Here is the relationship between TripAdvisor hotels and customers.</p>
+        <p>The massive amount of user-generated content posted on Trip Advisor is an invaluable resource of feedback for hotels and Trip Advisor itself. With this feedback, Trip Advisor can conduct internal improvement efforts, in addition to working with hotels to improve the customer experience. To date, Trip Advisor has used the labor intensive and potentially biased method of manually analyzing a small subset of the reviews. The goal of this project, therefore, is to construct an automated system (software) for analyzing free-form text responses. The output of this analysis will include extraction of informative word pairs (e.g. “great location”) in addition to calculation of a sentiment score.</p>
+        <p>This is our understanding of the relationship between TripAdvisor, hotels, and customers:</p>
         <img src="img/BusinessCycle.jpg">
 
       </div>
@@ -137,14 +156,11 @@
         <img src="img/flow1.png" width="40%">
         <br>
 
-
-
-        <p>Then we proposed steps for constructing this system are as follows:</p>
         <div id="pair">
           <h3>1. Pair Extraction</h3>
           <h4>1.1 Dependency Tree</h4>
-          <p>Notice in the example above that the insights we wish to extract are in the form of adjective-noun pairs. We use a package named “spaCy” to parse each sentence into a dependency tree. A dependency tree is a grammatical model that uses part of speech tagging and contextual elements to establish hierarchical relations between words and phrases within a sentence. Within the tree structure, if word A is under word B, it means word A depends on B. If a noun is the subject of the adjective, this noun shares the same head with the adjective. Therefore, we can use the dependency tree to identify noun-adjective associations.</p>
-          <p>Here is an example of the dependency tree for the sentence:<br> “Location is great and easily walkable to downtown Napa”</p>
+          <p>We use a package named “spaCy” to parse each sentence into a dependency tree. A dependency tree is a grammatical model that uses part of speech tagging and contextual elements to establish hierarchical relations between words and phrases within a sentence. Within the tree structure, if word A is under word B, it means word A depends on B. If a noun is the subject of the adjective, this noun shares the same head with the adjective. Therefore, we can use the dependency tree to identify noun-adjective associations.</p>
+          <p>Here is an example of a dependency tree:</p>
           <img src="img/denpendency.png">
           <p>To find the noun-adjective pairs we use the following procedure:</p>
           <p>For each noun:</p>
@@ -238,7 +254,7 @@
           </div>
 
 
-          <p>Below are the sentiment scores distribution separated by the two review types. From the density plots, we can see the difference between the two observations and also the impact of the prior choice.</p>
+          <p>Below are the sentiment score distributions separated by the two review types. From the density plots, we can see the difference between the two observations and also the impact of the prior choice.</p>
           <img src="img/sentiment1.png" style="width:750px">
         </div>
       </div>
@@ -247,12 +263,8 @@
 
       <div id="results", class="hidden">
         <h2>Results</h2>
-        <p>After using all the methods in adjective/ nouns extraction, topic classification and sentimental analysis, we can summarize the accuracy of each part in the following framework:</p>
-        <img src="img/result1.png">
 
-        <p>A fully optimized data structure is created that provides the capability and functionality to store all of the extracted keywords, adjectives, and sentiment scores into corresponding classified categories for each hotel. This information will be presented in summary, with the option of full output, for ease of use by Trip Advisor. Visualizations are presented with the text output for further insight as demonstrated below.</p>
-
-        <p>The text output consists of noun-adjective pairs separated into categories and the average sentiment score per category.</p>
+        <p>A fully optimized data structure is created that provides the capability and functionality to store all of the extracted keywords, adjectives, and sentiment scores into corresponding classified categories for each hotel. The text output consists of noun-adjective pairs separated into categories and the average sentiment score per category.</p>
 
         <img src="img/result2.png" style="width:350px">
 
@@ -268,7 +280,7 @@
 
       <div id="conclusions", class="hidden">
         <h2>Conclusions</h2>
-        <p>We constructed a system for automated analysis of free form text reviews using hotel data provided by Smarter Travel, a subsidiary of TripAdvisor. In particular, we implemented lexical parsers for information extraction (F1 score: 68%), machine learning algorithms for classification of adjective-noun pairs (F1 score range: 53-71%), and model averaging of unsupervised and supervised approaches with integration of Bayesian priors to quantify sentiment (accuracy: 85%).</p>
+        <p>We constructed a system for automated analysis of free form text reviews using hotel data provided by Smarter Travel, a subsidiary of TripAdvisor. In particular, we implemented lexical parsers for information extraction (F1 score: 68%), machine learning algorithms for classification of adjective-noun pairs (F1 score range: 53-71%), and model averaging of unsupervised and supervised approaches with integration of Bayesian priors to quantify sentiment (accuracy: 80%).</p>
 
         <p>There are several opportunities to improve the performance of the proposed methods. Regarding topic classification, we would most certainly benefit from a larger training set. The 1500 sentences that we manually labeled do not represent all of the categories equally, and the F1 scores tend to correlate with sample size. We could also pursue other approaches altogether. For example, an initial attempt at implementing Latent Dirichlet Allocation was not successful, but perhaps there are useful concepts to adapt from topic modeling. With regard to pair extraction, there are likely many more edge cases that need to be addressed. This is a slow process, but it is necessary for dealing with the complexity inherent in largely unstructured text data. Furthermore, it would be interesting to explore methods for dealing with sarcasm or the use of metaphors. The third component to the project, sentiment analysis, has already achieved performance near the limit of human agreement. However, we may improve our results by using supervised learning with a training set of labeled product reviews instead of movie reviews. In fact, ideally we would manually label the sentiment of thousands of hotel reviews from the given data set and use those samples to train the classifier.</p>
 
@@ -278,7 +290,7 @@
         <br>
 
         <h3>Acknowledgements</h3>
-        <p>We thank Ryan Amari, Bryan Balin, and Chris Stasonis for providing the data and helpful insights.</p>
+        <p>We thank Ryan Amari, Bryan Balin, and Chris Stasonis from SmarterTravel for providing the data and helpful insights. We thank Cathy Chute, Rahul Dave, and Pavlos Protopapas from Harvard for their guidance and support.</p>
         <p>This work was done as part of the AC297r Capstone course at Harvard. You can find more information and other cool projects here: <a href="http://ac297r.org/" target="_blank">AC297r</a></p>
 
         <h3>Contact information</h3>
@@ -335,7 +347,26 @@
         // Toggle classes of divs
         });
       });
+
+      jQuery(document).ready(function() {
+        var offset = 220;
+        var duration = 500;
+        jQuery(window).scroll(function() {
+            if (jQuery(this).scrollTop() > offset) {
+                jQuery('.back-to-top').fadeIn(duration);
+            } else {
+                jQuery('.back-to-top').fadeOut(duration);
+            }
+        });
+        
+        jQuery('.back-to-top').click(function(event) {
+            event.preventDefault();
+            jQuery('html, body').animate({scrollTop: 0}, duration);
+            return false;
+        })
+      });
     </script>
+    
 
     <!-- <script src="js/jquery.js"></script> -->
     <script src="js/typed.min.js"></script>
